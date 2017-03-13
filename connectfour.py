@@ -36,7 +36,7 @@ class ConnectFour(object):
         self.check_win(token_position)
 
     def play(self):
-        """Initialize the board and start the game event loop"""
+        """start the game event loop"""
         print("Hello {} and {}, welcome to ConnectFour!".format(self.p1.name, self.p2.name))
         while not self.game_won:
             player = next(self.players)
