@@ -17,7 +17,7 @@ class ConnectFour(object):
         self.players = cycle((self.p1, self.p2))
 
     def check_win(self, token_position):
-        if any(len(connection) >= self.to_win for connection in self.board.get_connections(token_position)):
+        if any(len(connection) >= self.to_win for connection in self.board.connections(token_position)):
             self.game_won = True
 
     def turn(self, player):
@@ -78,7 +78,7 @@ class Board(list):
         # print column numbers
         print(*range(self.columns), sep=' | ', end=' |\n')
 
-    def get_connections(self, token_position):
+    def connections(self, token_position):
         """Get connecting tokens of equal value along 4 directional axes"""
         vertical = [(-1, 0), (1, 0)]
         horizontal = [(0, 1), (0, -1)]
@@ -87,7 +87,6 @@ class Board(list):
         axes = [vertical, horizontal, forward_diag, backward_diag]
         row_pos, col_pos = token_position
         token_value = self[row_pos][col_pos]
-        connections = []
 
         for axis in axes:
             connection = [token_value]
@@ -104,8 +103,7 @@ class Board(list):
                         col_pos += col_incr
                     else:
                         break
-            connections.append(connection)
-        return connections
+            yield connection
 
 if __name__ == '__main__':
     p1_name = input("Enter a name for Player 1: ")
